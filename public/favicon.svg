@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
+  <style>
+    .edge { stroke: #936417; }
+    .ink { fill: #20251a; }
+    @media (prefers-color-scheme: dark) {
+      .edge { stroke: #c08a3e; }
+      .ink { fill: #e4e7dc; }
+    }
+  </style>
+  <path d="M32 7l21 7v6l-21-6-21 6v-6z" fill="#c08a3e" stroke="none" />
+  <path
+    d="M32 17l17 5v12c0 12-7 19-17 23-10-4-17-11-17-23V22z"
+    fill="none"
+    class="edge"
+    stroke-width="4"
+    stroke-linejoin="round"
+  />
+  <text x="32" y="42" text-anchor="middle" font-size="24" font-family="serif" class="ink">詰</text>
+</svg>
