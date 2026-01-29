@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 516" role="img" aria-label="tsumeshogiのアーキテクチャ図">
+  <title>tsumeshogiのアーキテクチャ: 入力からUI、詰将棋エンジン、問題データまでの流れ</title>
+  <style>
+    .box { fill: #fdfdfb; stroke: #d8dccf; }
+    .zone { fill: #f0f1ea; stroke: #e0e2d6; }
+    .t { font-family: 'Hiragino Sans', 'Noto Sans JP', system-ui, sans-serif; fill: #20251a; }
+    .h { font-size: 13px; font-weight: 600; }
+    .s { font-size: 11px; fill: #5e6553; }
+    .zl { font-size: 11px; font-weight: 700; fill: #936417; letter-spacing: 1px; }
+    .arrow { stroke: #93998a; stroke-width: 1.6; fill: none; marker-end: url(#head); }
+    .mono { font-family: 'SFMono-Regular', Consolas, monospace; }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #181c14; stroke: #2b3122; }
+      .zone { fill: #12150e; stroke: #242a1c; }
+      .t { fill: #e4e7dc; }
+      .s { fill: #99a08c; }
+      .zl { fill: #c08a3e; }
+      .arrow { stroke: #6f7665; }
+    }
+  </style>
+  <defs>
+    <marker id="head" markerWidth="9" markerHeight="9" refX="6" refY="4.5" orient="auto">
+      <path d="M0 0 L8 4.5 L0 9 Z" fill="#93998a" />
+    </marker>
+  </defs>
+
+  <rect class="zone" x="20" y="20" width="780" height="86" rx="13" />
+  <text class="t zl" x="36" y="44">入力</text>
+  <rect class="box" x="36" y="54" width="372" height="50" rx="9" />
+  <text class="t h" x="52" y="78">盤クリック / 持ち駒選択</text>
+  <text class="t s" x="52" y="94">動かす駒と行き先を指定する</text>
+  <rect class="box" x="428" y="54" width="356" height="50" rx="9" />
+  <text class="t h" x="444" y="78">ヒント / 答えを見る</text>
+  <text class="t s" x="444" y="94">詰み筋を示す・自動で再生する</text>
+
+  <path class="arrow" d="M410 106 V132" />
+
+  <rect class="zone" x="20" y="134" width="780" height="110" rx="13" />
+  <text class="t zl mono" x="36" y="158">UI (src/main.ts)</text>
+  <rect class="box" x="36" y="168" width="360" height="68" rx="9" />
+  <text class="t h" x="52" y="192">SVG盤の描画</text>
+  <text class="t s" x="52" y="210">盤・駒・持ち駒・利き先をベクターで描く</text>
+  <rect class="box" x="412" y="168" width="372" height="68" rx="9" />
+  <text class="t h" x="428" y="192">トレーナー進行</text>
+  <text class="t s" x="428" y="210">指し手の正否を判定し、相手の応手を自動で指す</text>
+
+  <path class="arrow" d="M300 244 V278" />
+  <text class="t s" x="308" y="265">手の正否・詰み探索</text>
+  <path class="arrow" d="M520 278 V244" />
+  <text class="t s" x="512" y="265" text-anchor="end">最善応手</text>
+
+  <rect class="zone" x="20" y="280" width="780" height="96" rx="13" />
+  <text class="t zl" x="36" y="304">詰将棋エンジン</text>
+  <rect class="box" x="36" y="314" width="360" height="52" rx="9" />
+  <text class="t h mono" x="52" y="336">shogi.ts</text>
+  <text class="t s" x="52" y="354">合法手・王手・打ち歩詰め・詰み判定</text>
+  <rect class="box" x="412" y="314" width="372" height="52" rx="9" />
+  <text class="t h mono" x="428" y="336">solve.ts</text>
+  <text class="t s" x="428" y="354">AND-OR探索で詰みの有無と最善応手</text>
+
+  <path class="arrow" d="M410 376 V406" />
+  <text class="t s" x="418" y="396">参照</text>
+
+  <rect class="zone" x="20" y="408" width="780" height="92" rx="13" />
+  <text class="t zl mono" x="36" y="432">データ (src/lib)</text>
+  <rect class="box" x="36" y="442" width="360" height="44" rx="9" />
+  <text class="t h mono" x="52" y="463">problems.ts</text>
+  <text class="t s" x="150" y="463">検証済みの問題集</text>
+  <rect class="box" x="412" y="442" width="372" height="44" rx="9" />
+  <text class="t h mono" x="428" y="463">types.ts</text>
+  <text class="t s" x="520" y="463">盤・駒・手の型</text>
+
+  <text class="t s" x="410" y="510" text-anchor="middle">
+    全問題はテストが「ちょうどその手数で詰む」ことを検証している
+  </text>
+</svg>
