@@ -18,3 +18,4 @@ export {
 } from './shogi';
 export { attackerCanMate, findMatingMove, mateDistance, isSolvingMove, bestDefense } from './solve';
 export { PROBLEMS } from './problems';
+export { parseHash, buildHash, serializeProgress, parseProgress } from './progress';
