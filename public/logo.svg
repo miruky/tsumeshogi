@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="tsume-logo-title">
   <title id="tsume-logo-title">tsumeshogi - 守りの盾に詰の字のロゴ</title>
-  <path d="M32 7l21 7v6l-21-6-21 6v-6z" fill="var(--logo-accent, #936417)" stroke="none" />
+  <path d="M32 7l21 7v6l-21-6-21 6v-6z" fill="var(--logo-accent, #9a6312)" stroke="none" />
   <path
     d="M32 17l17 5v12c0 12-7 19-17 23-10-4-17-11-17-23V22z"
     fill="none"
