@@ -52,3 +52,40 @@ describe('UI のDOM結線', () => {
     expect(document.getElementById('p-title')?.textContent).toBe(PROBLEMS[1]!.title);
   });
 });
+
+function loadFirst(): void {
+  (document.querySelector('#probs button') as HTMLButtonElement).click();
+}
+
+describe('盤面操作と進捗', () => {
+  it('持ち駒を選ぶと打てる升に印が出る', () => {
+    loadFirst();
+    const board = document.getElementById('board')!;
+    expect(board.querySelectorAll('.mark-dest').length).toBe(0);
+    (document.querySelector('.hand.sente .hand-piece.selectable') as HTMLElement).click();
+    expect(board.querySelectorAll('.mark-dest').length).toBeGreaterThan(0);
+  });
+
+  it('待ったボタンは着手前は無効', () => {
+    loadFirst();
+    expect((document.getElementById('undo') as HTMLButtonElement).disabled).toBe(true);
+  });
+
+  it('頭金を打って詰ますと正解になり進捗が残る', () => {
+    loadFirst(); // 頭金: 後手玉(1筋上段)へ金を打てば一手詰
+    (document.querySelector('.hand.sente .hand-piece.selectable') as HTMLElement).click();
+    // カーソルは玉の真下(打つ升)にある。Enterで着手する。
+    const board = document.getElementById('board')!;
+    board.dispatchEvent(new KeyboardEvent('keydown', { key: 'Enter', bubbles: true }));
+    expect(document.getElementById('message')?.textContent).toContain('正解');
+    expect(document.getElementById('solved-count')?.textContent).toBe('1');
+    expect((document.getElementById('undo') as HTMLButtonElement).disabled).toBe(false);
+  });
+
+  it('待ったで一手戻せる', () => {
+    // 直前のテストで詰ました状態から戻す。
+    (document.getElementById('undo') as HTMLButtonElement).click();
+    expect(document.getElementById('message')?.textContent).toContain('戻し');
+    expect(document.querySelectorAll('#movelist .mv')).toHaveLength(0);
+  });
+});
