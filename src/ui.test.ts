@@ -88,4 +88,20 @@ describe('盤面操作と進捗', () => {
     expect(document.getElementById('message')?.textContent).toContain('戻し');
     expect(document.querySelectorAll('#movelist .mv')).toHaveLength(0);
   });
+
+  it('次の未解答へボタンで未解答の問題に移る', () => {
+    // 先頭の頭金は前のテストで解答済み。未解答の最初へ飛ぶ。
+    loadFirst();
+    (document.getElementById('next-unsolved') as HTMLButtonElement).click();
+    expect(document.getElementById('p-title')?.textContent).not.toBe(PROBLEMS[0]!.title);
+    expect(document.getElementById('p-state')?.textContent).toBe('未解答');
+  });
+
+  it('進捗のリセットで解答数が0に戻る', () => {
+    window.confirm = () => true;
+    expect(Number(document.getElementById('solved-count')?.textContent)).toBeGreaterThan(0);
+    (document.getElementById('reset-progress') as HTMLButtonElement).click();
+    expect(document.getElementById('solved-count')?.textContent).toBe('0');
+    expect((document.getElementById('reset-progress') as HTMLButtonElement).hidden).toBe(true);
+  });
 });
