@@ -176,4 +176,17 @@ export const PROBLEMS: readonly Problem[] = [
       { S: 1 },
     ),
   },
+  {
+    id: 'm7-ryu-gin-migi',
+    title: '竜と銀の追い(右)',
+    moves: 7,
+    note: '左右を入れ替えた七手詰。右の端へ向かう追い方を、もう一度自力で組み立てる。',
+    position: buildPosition(
+      [
+        [0, 7, 'w', 'K'],
+        [3, 6, 'b', 'R', true], // 竜
+      ],
+      { S: 1 },
+    ),
+  },
 ];
