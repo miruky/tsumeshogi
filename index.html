@@ -5,11 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="詰将棋トレーナー。SVGの盤面で、王手を続けて玉を詰ます手筋を1手詰から5手詰まで練習できる"
+      content="詰将棋トレーナー。SVGの盤面で、王手を続けて玉を詰ます手筋を1手詰から7手詰まで練習できる"
     />
     <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>tsumeshogi | 詰将棋トレーナー</title>
+    <script>
+      // 描画前にテーマを確定させ、ちらつき(FOUC)を防ぐ。
+      try {
+        var t = localStorage.getItem('tsume-theme');
+        if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+      } catch (e) {}
+    </script>
   </head>
   <body>
     <div id="app"></div>

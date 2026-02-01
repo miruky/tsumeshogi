@@ -1,13 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-hidden="true">
   <style>
-    .edge { stroke: #936417; }
-    .ink { fill: #20251a; }
+    .edge { stroke: #9a6312; }
+    .ink { fill: #211d15; }
     @media (prefers-color-scheme: dark) {
-      .edge { stroke: #c08a3e; }
-      .ink { fill: #e4e7dc; }
+      .edge { stroke: #d2a154; }
+      .ink { fill: #e9e3d4; }
     }
   </style>
-  <path d="M32 7l21 7v6l-21-6-21 6v-6z" fill="#c08a3e" stroke="none" />
+  <path d="M32 7l21 7v6l-21-6-21 6v-6z" fill="#d2a154" stroke="none" />
   <path
     d="M32 17l17 5v12c0 12-7 19-17 23-10-4-17-11-17-23V22z"
     fill="none"
