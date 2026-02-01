@@ -220,6 +220,11 @@ button.link-btn:hover {
   background-size: 100% 1px;
 }
 
+button.btn-wide {
+  width: 100%;
+  margin-top: 8px;
+}
+
 :is(button, [tabindex], a, [role='button']):focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
@@ -534,6 +539,10 @@ button.link-btn:hover {
   border-bottom: 1px solid var(--faint);
   border-radius: 0;
   border-left: 2px solid transparent;
+  transition:
+    color 0.18s var(--ease),
+    background 0.18s var(--ease),
+    border-left-color 0.2s var(--ease);
 }
 .probs .prob:hover {
   background: var(--faint-2);

@@ -148,9 +148,10 @@ function shell(): string {
         <button id="answer" type="button" class="ghost"><span class="k">A</span>解答</button>
       </div>
       <div class="controls nav">
-        <button id="prev" type="button" class="ghost">前の問題</button>
+        <button id="prev" type="button" class="ghost"><span class="k">P</span>前の問題</button>
         <button id="next" type="button" class="solid"><span class="k">N</span>次の問題</button>
       </div>
+      <button id="next-unsolved" type="button" class="ghost btn-wide">次の未解答へ</button>
     </section>
 
     <section class="block">
@@ -169,6 +170,7 @@ function shell(): string {
         <rect class="meter-fill" id="meter-fill" x="0" y="0" width="0" height="4" rx="2" />
       </svg>
       <ul class="probs" id="probs"></ul>
+      <button id="reset-progress" type="button" class="link-btn" hidden>進捗をリセット</button>
     </section>
   </aside>
 </main>
@@ -176,7 +178,7 @@ function shell(): string {
 <footer class="site-footer reveal" style="--d:3">
   <p>駒をクリック、または矢印キーで選び Enter で動かす。王手を続けて詰みを目指す。</p>
   <p class="legend">
-    <kbd>H</kbd> ヒント<kbd>U</kbd> 待った<kbd>R</kbd> 初手<kbd>A</kbd> 解答<kbd>N</kbd> 次<kbd>T</kbd> テーマ
+    <kbd>H</kbd> ヒント<kbd>U</kbd> 待った<kbd>R</kbd> 初手<kbd>A</kbd> 解答<kbd>N</kbd> 次<kbd>P</kbd> 前<kbd>T</kbd> テーマ
   </p>
   <a href="https://github.com/miruky/tsumeshogi" class="src-link">ソース</a>
 </footer>
@@ -526,6 +528,8 @@ class Trainer {
     el<HTMLButtonElement>('hint').disabled = this.status !== 'solving' || this.locked;
     el<HTMLButtonElement>('answer').disabled = this.status !== 'solving' || this.locked;
     el<HTMLButtonElement>('undo').disabled = this.history.length === 0 || this.locked;
+    el<HTMLButtonElement>('next-unsolved').disabled = this.solved.size >= PROBLEMS.length;
+    el<HTMLButtonElement>('reset-progress').hidden = this.solved.size === 0;
   }
 
   // --- 操作 -----------------------------------------------------------------
@@ -750,6 +754,8 @@ class Trainer {
     el<HTMLButtonElement>('answer').addEventListener('click', () => void this.showAnswer());
     el<HTMLButtonElement>('prev').addEventListener('click', () => this.step(-1));
     el<HTMLButtonElement>('next').addEventListener('click', () => this.step(1));
+    el<HTMLButtonElement>('next-unsolved').addEventListener('click', () => this.nextUnsolved());
+    el<HTMLButtonElement>('reset-progress').addEventListener('click', () => this.resetProgress());
     el<HTMLButtonElement>('copy').addEventListener('click', () => void this.copyKifu());
     el<HTMLButtonElement>('theme').addEventListener('click', () => cycleTheme());
     el<HTMLButtonElement>('promo-yes').addEventListener('click', () => this.resolvePromo(true));
@@ -766,6 +772,33 @@ class Trainer {
   private step(delta: number): void {
     const n = PROBLEMS.length;
     this.loadProblem((this.probIndex + delta + n) % n);
+  }
+
+  /** 現在地から先で、まだ解いていない最初の問題へ移る。全問正解なら知らせる。 */
+  private nextUnsolved(): void {
+    const n = PROBLEMS.length;
+    for (let k = 1; k <= n; k++) {
+      const i = (this.probIndex + k) % n;
+      if (!this.solved.has(PROBLEMS[i]!.id)) {
+        this.loadProblem(i);
+        return;
+      }
+    }
+    this.setMessage('すべての問題を解き終えました。', 'good');
+  }
+
+  private resetProgress(): void {
+    if (this.solved.size === 0) return;
+    if (
+      typeof window.confirm === 'function' &&
+      !window.confirm('解答の記録をすべて消去しますか?')
+    ) {
+      return;
+    }
+    this.solved.clear();
+    store.set(KEY_SOLVED, serializeProgress(this.solved));
+    this.setMessage('進捗をリセットしました。', '');
+    this.render();
   }
 
   private onBoardKey(e: KeyboardEvent): void {
